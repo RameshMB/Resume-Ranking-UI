@@ -1,0 +1,97 @@
+<div class="container">
+    <div class="row pb-1 mt-4 mb-1 border-bottom">
+        <h5>Requirements</h5>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group required">
+                <label class="font-weight-bold">Catalog:</label>
+                <angular2-multiselect [data]="userCatalogs" [(ngModel)]="selectedCatalog" 
+                    [settings]="catalogSettings" 
+                    (onSelect)="onCatalogSelect($event)" 
+                    (onDeSelect)="onCatalogDeSelect($event)"
+                    (onDeSelectAll)="onCatalogDeSelectAll($event)">
+                </angular2-multiselect>
+            </div>
+        </div>
+        <div class="col-sm-2" *ngIf="selectedCatalog.length">
+            <div class="form-group required">
+                <label class="font-weight-bold">Min. Exp</label>
+                <input type="text" name="minimumExp" id="minimumExp" class="form-control" value="1" [(ngModel)]="minExperience">
+            </div>
+        </div>
+        <div class="col-sm-2" *ngIf="selectedCatalog.length">
+            <div class="form-group required">
+                <label class="font-weight-bold">Max. Exp</label>
+                <input type="text" name="maximumExp" id="maximumExp" class="form-control" value="2" [(ngModel)]="maxExperience">
+            </div>
+        </div>
+        <div class="col-sm-4" *ngIf="selectedCatalog.length">
+            <div class="form-group">
+                <label class="font-weight-bold">Qualification</label>                    
+                <angular2-multiselect [data]="qualifications" [(ngModel)]="selectedQualifications" 
+                    [settings]="qualificationsSettings">
+                </angular2-multiselect>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="selectedCatalog.length">
+        <div class="col-sm-5">
+            <div class="form-group required">
+                <label class="font-weight-bold">Required Skills</label>
+                <angular2-multiselect [data]="requiredSkills" [(ngModel)]="selectedReqSkills" 
+                    [settings]="requiredSkillsSettings">
+                </angular2-multiselect>                    
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-group">
+                <label class="font-weight-bold">Optional SKills</label>
+                <angular2-multiselect [data]="optionalSkills" [(ngModel)]="selectedOptionalSkills" 
+                    [settings]="optionalSkillsSettings">
+                </angular2-multiselect>
+            </div>
+        </div>
+        
+        <div class="col-sm-2" style="padding-top: 30px;">
+            <div class="form-group">
+                <button name="submit" class="btn btn-primary" (click)="getMatchedProfiles()">Go</button>
+            </div>
+        </div>
+    </div>
+    <div class="row pb-1 mt-4 mb-1 border-bottom" *ngIf="matchedProfiles.length">
+        <h5>Matching Profiles</h5>
+    </div>
+    <div class="row" *ngIf="matchedProfiles.length">
+        <div class="col-sm-12">
+            <br/>
+            <table style="width:100%" class="table display table-striped table-bordered row-border hover" datatable [dtOptions]="dtOptions">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>MOBILE NO</th>
+                        <th>EMAIL ADDRESS</th>
+                        <th>Skills</th>
+                        <th>Match Score</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let file of matchedProfiles; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{file.Name}}</td>
+                        <td>{{file.Mobile_No}}</td>
+                        <td>{{file.Email_Address}}</td>
+                        <td>{{file.Skills}}</td>
+                        <td>{{file.Total_Match_Score}}%</td>
+                        <td>
+                            <!-- <button class="download_btn" (click)="download_resume(file.catalog, file._id)"><i class="fa fa-download" aria-hidden="true"></i></button> -->
+                            <a download href={{file.download_url}}>Download</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+.form-group.required .font-weight-bold:after {
+    content:"*";
+    color:red;
+}

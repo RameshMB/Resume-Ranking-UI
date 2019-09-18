@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row pb-1 mt-4 mb-1">       
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group required">
+                <label class="font-weight-bold">Catalog:</label>
+                <angular2-multiselect [data]="userCatalogs" [(ngModel)]="selectedCatalog" 
+                    [settings]="catalogSettings" 
+                    (onSelect)="onCatalogSelect($event)" 
+                    (onDeSelect)="onCatalogDeSelect($event)">
+                </angular2-multiselect>            
+            </div>
+        </div>
+    </div>
+    <div class="row pb-1 mt-4 mb-1 border-bottom" *ngIf="catalogFiles.length">
+        <h5>Catalog Profiles</h5>
+    </div>
+    <div class="row" *ngIf="catalogFiles.length">
+        <div class="col-sm-12">
+            <br/>
+            <table style="width:100%" class="table table-striped table-bordered row-border hover" datatable [dtOptions]="dtOptions">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>MOBILE NO</th>
+                        <th>EMAIL ADDRESS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let file of catalogFiles; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{file.Name}}</td>
+                        <td>{{file.Mobile_No}}</td>
+                        <td>{{file.Email_Address}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

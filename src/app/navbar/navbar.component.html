@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <img src="assets/images/EY.png" width="90" class="d-inline-block align-top">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item linkmargin" [routerLinkActive]="['active-link']">
+          <a class="nav-link" [routerLink]="['dashboard']" href="/">Home
+        </a>
+        </li>
+        <li class="nav-item linkmargin" [routerLinkActive]="['active-link']">
+          <a class="nav-link" [routerLink]="['upload']" href="/upload">Upload
+        </a>
+        </li>
+        <li class="nav-item linkmargin" [routerLinkActive]="['active-link']">
+          <a class="nav-link" [routerLink]="['my-catalogs']" href="/my-catalogs">MyCatalogs
+        </a>
+        </li>
+        <li class="nav-item linkmargin" [routerLinkActive]="['active-link']">
+          <a class="nav-link" [routerLink]="['shortlist']" href="/shortlist">ShortList
+        </a>
+        </li>
+      </ul>
+      <!-- <button (click)="onLogout()" class="btn btn-outline-danger margin">Logout</button> -->
+    </div>
+  </div>
+</nav>

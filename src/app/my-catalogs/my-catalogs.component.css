@@ -1,0 +1,9 @@
+.form-group.required .font-weight-bold:after {
+    content:"*";
+    color:red;
+}
+
+
+.border-bottom {
+    border-bottom: 1px solid #FFDB00!important;
+}

@@ -1,0 +1,22 @@
+.form-group.required .font-weight-bold:after {
+    content:"*";
+    color:red;
+}
+
+
+.border-bottom {
+    border-bottom: 1px solid #FFDB00!important;
+}
+
+
+.download_btn {
+    background-color: DodgerBlue;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  /* Darker background on mouse-over */
+  .download_btn:hover {
+    background-color: RoyalBlue;
+  }

@@ -1,0 +1,7 @@
+npm install -g @angular/cli
+ng update @angular/cli @angular/core
+
+npm i @ng-bootstrap/ng-bootstrap
+
+npm install @angular/animations --save
+npm install ngx-toastr --save

@@ -1,0 +1,33 @@
+.margin {
+    margin-left: 100px;
+}
+
+.linkmargin {
+    margin-left: 30px;
+}
+
+.bg-dark {
+    background-color: #2a2b2c!important;
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+.navbar-nav > li {
+    float: left;
+    position: relative;
+  }
+  .active-link {
+    border-bottom: 5px solid #FFDB00;
+    bottom: -10px;
+    content: " ";
+    left: 0;
+    position: absolute;
+    right: 0;
+    width: auto;
+  }
+
+/* .active-link {
+    background-color:     #FFDB00
+} */
