@@ -76,15 +76,24 @@ export class RestApiService {
       catchError(this.handleError)
     )  
   }
-   
-  downloadResume(userId: string, catalog_id: string, file_id: string) {
-    return this.http.post<any[]>(this.apiURL + '/download-resume', 
-      JSON.stringify({"user_id": userId, "catalog_id": catalog_id, "file_id": file_id}), this.httpOptions)
+
+  extractFileData(userId: string, catalogName: string) {
+    return this.http.post<any[]>(this.apiURL + '/extract-catalog-resumes-data', 
+      JSON.stringify({"user_id": userId, "catalog": catalogName}), this.httpOptions)
     .pipe(
       retry(0),
       catchError(this.handleError)
     )  
   }
+   
+  // downloadResume(userId: string, catalog_id: string, file_id: string) {
+  //   return this.http.post<any[]>(this.apiURL + '/download-resume', 
+  //     JSON.stringify({"user_id": userId, "catalog_id": catalog_id, "file_id": file_id}), this.httpOptions)
+  //   .pipe(
+  //     retry(0),
+  //     catchError(this.handleError)
+  //   )  
+  // }
 
   // downloadResume(userId: string, catalogName: string, file_id: string) {
   //   return this.http.get<any[]>(this.apiURL + '/download-resume?' + 

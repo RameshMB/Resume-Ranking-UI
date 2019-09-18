@@ -1,11 +1,10 @@
 <div class="container">
-    <div class="row pb-1 mt-4 mb-1 border-bottom">
-        <h5>Requirements</h5>
+    <div class="row pb-1 mt-4 mb-1">       
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-6">            
             <div class="form-group required">
-                <label class="font-weight-bold">Catalog:</label>
+                <label class="font-weight-bold">Choose Catalog:</label>
                 <angular2-multiselect [data]="userCatalogs" [(ngModel)]="selectedCatalog" 
                     [settings]="catalogSettings" 
                     (onSelect)="onCatalogSelect($event)" 
@@ -14,6 +13,11 @@
                 </angular2-multiselect>
             </div>
         </div>
+    </div>
+    <div class="row pb-1 mt-4 mb-1 border-bottom" *ngIf="selectedCatalog.length">
+        <h5>Requirements</h5>
+    </div>
+    <div class="row" *ngIf="selectedCatalog.length">        
         <div class="col-sm-2" *ngIf="selectedCatalog.length">
             <div class="form-group required">
                 <label class="font-weight-bold">Min. Exp</label>
@@ -26,6 +30,24 @@
                 <input type="text" name="maximumExp" id="maximumExp" class="form-control" value="2" [(ngModel)]="maxExperience">
             </div>
         </div>
+        <div class="col-sm-8">
+            <div class="form-group required">
+                <label class="font-weight-bold">Required Skills</label>
+                <angular2-multiselect [data]="requiredSkills" [(ngModel)]="selectedReqSkills" 
+                    [settings]="requiredSkillsSettings">
+                </angular2-multiselect>                    
+            </div>
+        </div>        
+    </div>
+    <div class="row" *ngIf="selectedCatalog.length">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label class="font-weight-bold">Optional SKills</label>
+                <angular2-multiselect [data]="optionalSkills" [(ngModel)]="selectedOptionalSkills" 
+                    [settings]="optionalSkillsSettings">
+                </angular2-multiselect>
+            </div>
+        </div>
         <div class="col-sm-4" *ngIf="selectedCatalog.length">
             <div class="form-group">
                 <label class="font-weight-bold">Qualification</label>                    
@@ -34,28 +56,11 @@
                 </angular2-multiselect>
             </div>
         </div>
-    </div>
-    <div class="row" *ngIf="selectedCatalog.length">
-        <div class="col-sm-5">
-            <div class="form-group required">
-                <label class="font-weight-bold">Required Skills</label>
-                <angular2-multiselect [data]="requiredSkills" [(ngModel)]="selectedReqSkills" 
-                    [settings]="requiredSkillsSettings">
-                </angular2-multiselect>                    
-            </div>
-        </div>
-        <div class="col-sm-5">
-            <div class="form-group">
-                <label class="font-weight-bold">Optional SKills</label>
-                <angular2-multiselect [data]="optionalSkills" [(ngModel)]="selectedOptionalSkills" 
-                    [settings]="optionalSkillsSettings">
-                </angular2-multiselect>
-            </div>
-        </div>
-        
         <div class="col-sm-2" style="padding-top: 30px;">
             <div class="form-group">
-                <button name="submit" class="btn btn-primary" (click)="getMatchedProfiles()">Go</button>
+                <button name="submit" class="btn btn-primary" 
+                [disabled]="!selectedCatalog.length || !minExperience || !maxExperience ||!selectedReqSkills.length"
+                 (click)="getMatchedProfiles()">Go</button>
             </div>
         </div>
     </div>
@@ -68,12 +73,14 @@
             <table style="width:100%" class="table display table-striped table-bordered row-border hover" datatable [dtOptions]="dtOptions">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>NAME</th>
-                        <th>MOBILE NO</th>
-                        <th>EMAIL ADDRESS</th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Mobile No</th>
+                        <th>Email Address</th>
+                        <th>Profile Match(%)</th>
+                        <th>Experience(Yrs)</th>
+                        <th>Qualifications</th>
                         <th>Skills</th>
-                        <th>Match Score</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -83,11 +90,13 @@
                         <td>{{file.Name}}</td>
                         <td>{{file.Mobile_No}}</td>
                         <td>{{file.Email_Address}}</td>
+                        <td>{{file.Total_Match_Score}}</td>
+                        <td>{{file.Years_of_Experience}}</td>
+                        <td>{{file.Degree}}</td>
                         <td>{{file.Skills}}</td>
-                        <td>{{file.Total_Match_Score}}%</td>
                         <td>
                             <!-- <button class="download_btn" (click)="download_resume(file.catalog, file._id)"><i class="fa fa-download" aria-hidden="true"></i></button> -->
-                            <a download href={{file.download_url}}>Download</a>
+                            <a download href={{file.download_url}}><i class="fa fa-download" aria-hidden="true"></i></a>
                         </td>
                     </tr>
                 </tbody>

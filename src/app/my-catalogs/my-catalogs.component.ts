@@ -32,7 +32,7 @@ export class MyCatalogsComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       responsive: true,
-      scrollY: '200',
+      scrollY: '300',
       scrollX: true,
     };
     this.getUserCatalogNames();    
@@ -69,8 +69,8 @@ export class MyCatalogsComponent implements OnInit {
             });
           }
         });
-        this.dtTrigger.next();
-      }
+      this.dtTrigger.next();
+    }
   }
 
   onCatalogSelect(item: any) {
@@ -80,5 +80,27 @@ export class MyCatalogsComponent implements OnInit {
   onCatalogDeSelect(items: any) {
     console.log(items);
     this.getCatalogFiles();
+  }
+
+  extractFileData(){
+    if(this.selectedCatalog.length){
+      this.apiService.extractFileData(this.apiService.userID, this.selectedCatalog[0]["itemName"])
+        .subscribe((response)=>{
+          if(response["status"] === "success"){
+            this.toastr.success(response["message"], '', {
+              timeOut: 3000,
+              progressBar: true,
+              closeButton: true
+            });
+            this.getCatalogFiles();
+          }else if(response["status"] === "error"){
+            this.toastr.error("Unable to extract data from catalog files", '', {
+              timeOut: 3000,
+              progressBar: true,
+              closeButton: true
+            });
+          }
+        });
+    }
   }
 }

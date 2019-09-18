@@ -37,7 +37,7 @@ export class ShortlistComponent implements OnInit {
     unSelectAllText:'UnSelect All',
     enableSearchFilter: true,
     searchPlaceholderText: "Search Qualification",
-    badgeShowLimit:2,
+    badgeShowLimit:3,
     classes: "myclass custom-class"
   };
 
@@ -50,7 +50,7 @@ export class ShortlistComponent implements OnInit {
     unSelectAllText:'UnSelect All',
     enableSearchFilter: true,
     searchPlaceholderText: "Search Skill",
-    badgeShowLimit:3
+    badgeShowLimit:4
   };
 
   optionalSkills = [];
@@ -62,7 +62,7 @@ export class ShortlistComponent implements OnInit {
     unSelectAllText:'UnSelect All',
     enableSearchFilter: true,
     searchPlaceholderText: "Search Skill",
-    badgeShowLimit:3
+    badgeShowLimit:4
   };
   
   constructor(private apiService: RestApiService, private toastr: ToastrService, public router: Router) {  }
@@ -73,8 +73,8 @@ export class ShortlistComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       responsive: true,
-      scrollY: '200',
-      scrollX: true,
+      scrollY: '300',
+      scrollX: true
     };
   }
 
@@ -203,11 +203,11 @@ export class ShortlistComponent implements OnInit {
       this.dtTrigger.next();
   }
 
-  download_resume(catalog_id: string, file_id: string){
-    console.log(catalog_id, file_id);
-    this.apiService.downloadResume(this.apiService.userID, catalog_id, file_id)
-      .subscribe((response)=>{
-        console.log(response);
-      });
-  }
+  // download_resume(catalog_id: string, file_id: string){
+  //   console.log(catalog_id, file_id);
+  //   this.apiService.downloadResume(this.apiService.userID, catalog_id, file_id)
+  //     .subscribe((response)=>{
+  //       console.log(response);
+  //     });
+  // }
 }
