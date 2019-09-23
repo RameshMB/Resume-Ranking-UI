@@ -1,30 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" role="navigation">
-  <div class="container">
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
+  <div class="container-fluid">
     <a class="navbar-brand" href="/">
       <img src="assets/images/EY.png" width="90" class="d-inline-block align-top">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item linkmargin" [routerLinkActive]="['active-link']">
-          <a class="nav-link" [routerLink]="['dashboard']" href="/">Home
-        </a>
-        </li>
-        <li class="nav-item linkmargin" [routerLinkActive]="['active-link']">
-          <a class="nav-link" [routerLink]="['upload']" href="/upload">Upload
-        </a>
-        </li>
-        <li class="nav-item linkmargin" [routerLinkActive]="['active-link']">
-          <a class="nav-link" [routerLink]="['my-catalogs']" href="/my-catalogs">MyCatalogs
-        </a>
-        </li>
-        <li class="nav-item linkmargin" [routerLinkActive]="['active-link']">
-          <a class="nav-link" [routerLink]="['shortlist']" href="/shortlist">ShortList
-        </a>
-        </li>
-      </ul>
+    <div class="navbar-collapse collapse">
+      <div class="navbar-nav ml-auto">
+          <a class="nav-link linkmargin" [routerLink]="['dashboard']" href="/" [routerLinkActive]="['active-link']">Home</a>
+          <a class="nav-link linkmargin" [routerLink]="['upload']" href="/upload" [routerLinkActive]="['active-link']">Upload</a>
+          <a class="nav-link linkmargin" [routerLink]="['my-catalogs']" href="/my-catalogs" [routerLinkActive]="['active-link']">MyCatalogs</a>
+          <a class="nav-link linkmargin" [routerLink]="['shortlist']" href="/shortlist" [routerLinkActive]="['active-link']">ShortList</a>
+      </div>
       <!-- <button (click)="onLogout()" class="btn btn-outline-danger margin">Logout</button> -->
     </div>
   </div>

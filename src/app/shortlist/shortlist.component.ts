@@ -52,7 +52,7 @@ export class ShortlistComponent implements OnInit {
     unSelectAllText:'UnSelect All',
     enableSearchFilter: true,
     searchPlaceholderText: "Search Skill",
-    badgeShowLimit:4
+    badgeShowLimit:6
   };
 
   optionalSkills = [];
@@ -64,7 +64,7 @@ export class ShortlistComponent implements OnInit {
     unSelectAllText:'UnSelect All',
     enableSearchFilter: true,
     searchPlaceholderText: "Search Skill",
-    badgeShowLimit:4
+    badgeShowLimit:5
   };
   
   constructor(private apiService: RestApiService, private toastr: ToastrService, public router: Router) {  }

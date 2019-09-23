@@ -16,7 +16,7 @@ export class MyCatalogsComponent implements OnInit {
   public extracting: boolean = false;
   public deleting: boolean = false;
   
-  catalogFiles: any[] = [];
+  catalogFiles: any[];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
@@ -40,7 +40,7 @@ export class MyCatalogsComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       responsive: true,
-      scrollY: '300',
+      scrollY: '250',
       scrollX: true,
     };
     this.getUserCatalogNames();    

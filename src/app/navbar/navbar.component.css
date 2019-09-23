@@ -1,9 +1,9 @@
-.margin {
+/* .margin {
     margin-left: 100px;
-}
+} */
 
 .linkmargin {
-    margin-left: 30px;
+    margin-left: 20px;
 }
 
 .bg-dark {
@@ -14,7 +14,7 @@
     color: #ffffff;
 }
 
-.navbar-nav > li {
+.navbar-nav > a {
     float: left;
     position: relative;
   }
@@ -27,7 +27,3 @@
     right: 0;
     width: auto;
   }
-
-/* .active-link {
-    background-color:     #FFDB00
-} */

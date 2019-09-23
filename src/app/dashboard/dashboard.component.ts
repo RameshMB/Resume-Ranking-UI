@@ -10,7 +10,7 @@ import { RestApiService } from '../api/rest-api.service';
 })
 export class DashboardComponent implements OnInit {
 
-  catalogDetails: any[] = [];
+  catalogDetails: any[];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
@@ -25,8 +25,6 @@ export class DashboardComponent implements OnInit {
       scrollX: true,
     };
     this.getUserCatalogDetails();
-    console.log(this.apiService.userID, 'sssssssssssss');
-    console.log(this.apiService.logged_in, 'ddddddddddd');
   }
 
   public getUserCatalogDetails(){

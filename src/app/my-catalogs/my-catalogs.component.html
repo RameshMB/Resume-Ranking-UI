@@ -1,8 +1,6 @@
-<div class="container">
-    <div class="row pb-1 mt-4 mb-1">       
-    </div>
+<div class="col-md-12">
     <div class="row">
-        <div class="col-sm-6">
+        <div class="col-4">
             <div class="form-group required">
                 <label class="font-weight-bold">Choose Catalog:</label>
                 <angular2-multiselect [data]="userCatalogs" [(ngModel)]="selectedCatalog" 
@@ -12,26 +10,28 @@
                 </angular2-multiselect>            
             </div>
         </div>
-        <div class="col-sm-4" style="padding-top: 30px;" *ngIf="catalogFiles.length">
-            <div class="form-group pull-right">
-                 <button name="submit" class="btn btn-info" (click)="extractFileData()">Extract Data
-                    <i class="fa fa-spinner fa-spin" *ngIf="extracting"></i>
-                 </button>
+        <div class="col-8" style="padding-top: 32px;" *ngIf="selectedCatalog.length">
+            <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group mr-4" role="group">
+                    <button name="submit" class="btn btn-info" (click)="extractFileData()">Extract Data
+                        <i class="fa fa-spinner fa-spin" *ngIf="extracting"></i>
+                    </button>
+                </div>
+                <div class="btn-group mr-4" role="group">
+                    <button name="submit" class="btn btn-danger" style="padding-right: 10px;" (click)="deleteCatalog()">Delete
+                        <i class="fa fa-spinner fa-spin" *ngIf="deleting"></i>
+                    </button>
+                </div>                
             </div>
-            <div class="form-group">
-                <button name="submit" class="btn btn-danger" (click)="deleteCatalog()">Delete
-                  <i class="fa fa-spinner fa-spin" *ngIf="deleting"></i>
-                </button>
-           </div>
         </div>
     </div>
     <div class="row pb-1 mt-4 mb-1 border-bottom" *ngIf="catalogFiles.length">
         <h5>Catalog Profiles</h5>
     </div>
     <div class="row" *ngIf="catalogFiles.length">
-        <div class="col-sm-12">
+        <div class="col-md-12">
             <br/>
-            <table style="width:100%" class="table table-striped table-bordered row-border hover" datatable [dtOptions]="dtOptions">
+            <table class="table table-striped table-bordered row-border hover" datatable [dtOptions]="dtOptions">
                 <thead>
                     <tr>
                         <th>SL No.</th>
