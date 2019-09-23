@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,10 @@ export class RestApiService {
   
   // Define API
   apiURL = 'http://localhost:5000';
-  userID = "5d73a631dc1280680445b763";
+  userID = "5d73a631dc1280680445b763"; //ramesh
+  // userID = "5d84908958c58f0f23f71220"; //DK
+  logged_in = null;
+  
 
   constructor(private http: HttpClient) { }
 
@@ -26,7 +29,6 @@ export class RestApiService {
   getUserCatalogs(userId: string) {
     return this.http.post<any[]>(this.apiURL + '/user-catalogs', JSON.stringify({"user_id": userId}), this.httpOptions)
     .pipe(
-      retry(0),
       catchError(this.handleError)
     )  
   }
@@ -34,7 +36,6 @@ export class RestApiService {
   uploadCatalogFiles(formData: any) {
     return this.http.post<any[]>(this.apiURL + '/upload-catalog-resumes', formData)
     .pipe(
-      retry(0),
       catchError(this.handleError)
     )  
   }
@@ -43,7 +44,6 @@ export class RestApiService {
     return this.http.post<any[]>(this.apiURL + '/get-catalog-qualification', 
       JSON.stringify({"user_id": userId, "catalog": catalogName}), this.httpOptions)
     .pipe(
-      retry(0),
       catchError(this.handleError)
     )  
   }
@@ -52,7 +52,6 @@ export class RestApiService {
     return this.http.post<any[]>(this.apiURL + '/get-catalog-skills', 
       JSON.stringify({"user_id": userId, "catalog": catalogName}), this.httpOptions)
     .pipe(
-      retry(0),
       catchError(this.handleError)
     )  
   }
@@ -61,7 +60,6 @@ export class RestApiService {
     return this.http.post<any[]>(this.apiURL + '/get-catalog-files', 
       JSON.stringify({"user_id": userId, "catalog": catalogName}), this.httpOptions)
     .pipe(
-      retry(0),
       catchError(this.handleError)
     )  
   }
@@ -72,7 +70,6 @@ export class RestApiService {
       JSON.stringify({"user_id": userId, "catalog": catalogName, "min_exp": minExp, "max_exp": maxExp, 
       "req_skills": req_skills, "opt_skills": opt_skills, "qualifications": qualifications}), this.httpOptions)
     .pipe(
-      retry(0),
       catchError(this.handleError)
     )  
   }
@@ -81,55 +78,17 @@ export class RestApiService {
     return this.http.post<any[]>(this.apiURL + '/extract-catalog-resumes-data', 
       JSON.stringify({"user_id": userId, "catalog": catalogName}), this.httpOptions)
     .pipe(
-      retry(0),
+      catchError(this.handleError)
+    )  
+  }
+
+  getUserCatalogDetails(userId: string) {
+    return this.http.post<any[]>(this.apiURL + '/get-catalog-details', JSON.stringify({"user_id": userId}), this.httpOptions)
+    .pipe(
       catchError(this.handleError)
     )  
   }
    
-  // downloadResume(userId: string, catalog_id: string, file_id: string) {
-  //   return this.http.post<any[]>(this.apiURL + '/download-resume', 
-  //     JSON.stringify({"user_id": userId, "catalog_id": catalog_id, "file_id": file_id}), this.httpOptions)
-  //   .pipe(
-  //     retry(0),
-  //     catchError(this.handleError)
-  //   )  
-  // }
-
-  // downloadResume(userId: string, catalogName: string, file_id: string) {
-  //   return this.http.get<any[]>(this.apiURL + '/download-resume?' + 
-  //     "user_id=" + userId + "&" + "catalog=" + catalogName + "&" + "file_id=" + file_id)
-  //   .pipe(
-  //     retry(0),
-  //     catchError(this.handleError)
-  //   )  
-  // }
-  // // HttpClient API post() method => Create employee
-  // createEmployee(employee): Observable<Employee> {
-  //   return this.http.post<Employee>(this.apiURL + '/employees', JSON.stringify(employee), this.httpOptions)
-  //   .pipe(
-  //     retry(1),
-  //     catchError(this.handleError)
-  //   )
-  // }  
-
-  // // HttpClient API put() method => Update employee
-  // updateEmployee(id, employee): Observable<Employee> {
-  //   return this.http.put<Employee>(this.apiURL + '/employees/' + id, JSON.stringify(employee), this.httpOptions)
-  //   .pipe(
-  //     retry(1),
-  //     catchError(this.handleError)
-  //   )
-  // }
-
-  // // HttpClient API delete() method => Delete employee
-  // deleteEmployee(id){
-  //   return this.http.delete<Employee>(this.apiURL + '/employees/' + id, this.httpOptions)
-  //   .pipe(
-  //     retry(1),
-  //     catchError(this.handleError)
-  //   )
-  // }
-
   // Error handling 
   handleError(error) {
      let errorMessage = '';

@@ -19,13 +19,13 @@
     </div>
     <div class="row" *ngIf="selectedCatalog.length">        
         <div class="col-sm-2" *ngIf="selectedCatalog.length">
-            <div class="form-group required">
+            <div class="form-group">
                 <label class="font-weight-bold">Min. Exp</label>
                 <input type="text" name="minimumExp" id="minimumExp" class="form-control" value="1" [(ngModel)]="minExperience">
             </div>
         </div>
         <div class="col-sm-2" *ngIf="selectedCatalog.length">
-            <div class="form-group required">
+            <div class="form-group">
                 <label class="font-weight-bold">Max. Exp</label>
                 <input type="text" name="maximumExp" id="maximumExp" class="form-control" value="2" [(ngModel)]="maxExperience">
             </div>
@@ -59,7 +59,7 @@
         <div class="col-sm-2" style="padding-top: 30px;">
             <div class="form-group">
                 <button name="submit" class="btn btn-primary" 
-                [disabled]="!selectedCatalog.length || !minExperience || !maxExperience ||!selectedReqSkills.length"
+                [disabled]="!selectedReqSkills.length"
                  (click)="getMatchedProfiles()">Go</button>
             </div>
         </div>
@@ -73,7 +73,7 @@
             <table style="width:100%" class="table display table-striped table-bordered row-border hover" datatable [dtOptions]="dtOptions">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>SL No.</th>
                         <th>Name</th>
                         <th>Mobile No</th>
                         <th>Email Address</th>
@@ -81,6 +81,7 @@
                         <th>Experience(Yrs)</th>
                         <th>Qualifications</th>
                         <th>Skills</th>
+                        <th>Upload Date</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -94,6 +95,7 @@
                         <td>{{file.Years_of_Experience}}</td>
                         <td>{{file.Degree}}</td>
                         <td>{{file.Skills}}</td>
+                        <td>{{file.created_date}}</td>
                         <td>
                             <!-- <button class="download_btn" (click)="download_resume(file.catalog, file._id)"><i class="fa fa-download" aria-hidden="true"></i></button> -->
                             <a download href={{file.download_url}}><i class="fa fa-download" aria-hidden="true"></i></a>

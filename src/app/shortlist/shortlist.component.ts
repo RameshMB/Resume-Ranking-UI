@@ -15,8 +15,8 @@ export class ShortlistComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
-  minExperience = 1;
-  maxExperience = 2;
+  minExperience = null;
+  maxExperience = null;
 
   userCatalogs = [];
   selectedCatalog = [];
@@ -98,8 +98,6 @@ export class ShortlistComponent implements OnInit {
   onCatalogSelect(name:any){
     this.getCatalogQualifications();
     this.getCatalogSkills();
-    console.log(this.selectedCatalog, this.qualifications, this.requiredSkills, this.optionalSkills);
-
   }
 
   onCatalogDeSelect(name:any){
@@ -127,7 +125,6 @@ export class ShortlistComponent implements OnInit {
             for(let q_index in response["qualifications"]){
               this.qualifications.push({"id": q_index + 2, "itemName": response["qualifications"][q_index]});
             }
-            this.selectedQualifications = this.qualifications;
           }else if(response["status"] == "error"){
             this.toastr.error("Unable to get catalog qualifications", '', {
               timeOut: 1500,
@@ -171,6 +168,12 @@ export class ShortlistComponent implements OnInit {
     var selReqSkills = [];
     var selOptSkills = [];
     var catalog = this.selectedCatalog[0]["itemName"];
+    if(this.minExperience == 0 || this.minExperience == null){
+      this.minExperience = null;
+    }
+    if(this.maxExperience == 0 || this.maxExperience == null){
+      this.maxExperience = null;
+    }
     for (var ql of this.selectedQualifications) {
       selQualifications.push(ql['itemName']);
     }
@@ -202,12 +205,4 @@ export class ShortlistComponent implements OnInit {
       });
       this.dtTrigger.next();
   }
-
-  // download_resume(catalog_id: string, file_id: string){
-  //   console.log(catalog_id, file_id);
-  //   this.apiService.downloadResume(this.apiService.userID, catalog_id, file_id)
-  //     .subscribe((response)=>{
-  //       console.log(response);
-  //     });
-  // }
 }

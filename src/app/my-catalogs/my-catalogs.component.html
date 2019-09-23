@@ -27,13 +27,14 @@
             <table style="width:100%" class="table table-striped table-bordered row-border hover" datatable [dtOptions]="dtOptions">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>SL No.</th>
                         <th>Name</th>
                         <th>Mobile No</th>
                         <th>Email Address</th>
                         <th>Experience(Yrs)</th>
                         <th>Skills</th>
                         <th>Qualifications</th>
+                        <th>Upload Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,6 +46,7 @@
                         <td>{{file.Years_of_Experience}}</td>
                         <td>{{file.Skills}}</td>
                         <td>{{file.Degree}}</td>
+                        <td>{{file.created_date}}</td>
                     </tr>
                 </tbody>
             </table>

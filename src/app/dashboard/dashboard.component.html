@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="row pb-1 mt-4 mb-1">       
+    </div>
+    <div class="row pb-1 mt-4 mb-1 border-bottom" *ngIf="catalogDetails.length">
+        <h5>Catalog Details</h5>
+    </div>
+    <div class="row" *ngIf="catalogDetails.length">
+        <div class="col-sm-12">
+            <br/>
+            <table style="width:100%" class="table table-striped table-bordered row-border hover" datatable 
+            [dtOptions]="dtOptions">
+                <thead>
+                    <tr>
+                        <th>SL No.</th>
+                        <th>Catalog Name</th>
+                        <th>No. Of Profiles</th>
+                        <th>Created Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let catalog of catalogDetails; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{catalog.name}}</td>
+                        <td>{{catalog.total_files}}</td>
+                        <td>{{catalog.created_date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
