@@ -14,6 +14,7 @@ import {Router} from '@angular/router';
 export class UploadComponent implements OnInit {
   public user_catalogs: any[];
   public uploadedFiles: File[];
+  public loading: boolean = false;
   
   constructor(private apiService: RestApiService, private toastr: ToastrService, public router: Router) {  }
 
@@ -72,25 +73,30 @@ export class UploadComponent implements OnInit {
   }
 
   public onSubmit() {
-    const formData = new FormData();
-    Array.from(this.uploadedFiles).forEach(f => formData.append('file', f));
-    formData.append('user_id', this.apiService.userID);
-    formData.append('catalog_name', this.selectedCatalog);
-    this.apiService.uploadCatalogFiles(formData).subscribe((response)=>{
-      if(response["status"] == "success"){
-        this.toastr.success(response["message"], '', {
-          timeOut: 3000,
-          progressBar: true,
-          closeButton: true
-        });
-        this.router.navigate(['']);
-      }else if(response["status"] == "error"){
-        this.toastr.error(response["message"], '', {
-          timeOut: 3000,
-          progressBar: true,
-          closeButton: true
-        });
-      }
-     });
+    if(this.loading === false){
+      this.loading = true;
+      const formData = new FormData();
+      Array.from(this.uploadedFiles).forEach(f => formData.append('file', f));
+      formData.append('user_id', this.apiService.userID);
+      formData.append('catalog_name', this.selectedCatalog);
+      this.apiService.uploadCatalogFiles(formData).subscribe((response)=>{
+        if(response["status"] == "success"){
+          this.toastr.success(response["message"], '', {
+            timeOut: 3000,
+            progressBar: true,
+            closeButton: true
+          });
+          this.selectedCatalog = [];
+          this.uploadedFiles = null;        
+        }else if(response["status"] == "error"){
+          this.toastr.error(response["message"], '', {
+            timeOut: 3000,
+            progressBar: true,
+            closeButton: true
+          });
+        }
+        this.loading = false;
+      });
+    }
   }
 }

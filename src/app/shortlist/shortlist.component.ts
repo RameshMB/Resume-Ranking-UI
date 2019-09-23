@@ -11,6 +11,8 @@ import { Subject } from 'rxjs';
 })
 export class ShortlistComponent implements OnInit {
 
+  public submitting: boolean = false;
+
   matchedProfiles: any[] = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
@@ -183,26 +185,30 @@ export class ShortlistComponent implements OnInit {
     for (var os of this.selectedOptionalSkills) {
       selOptSkills.push(os['itemName']);
     }
-    this.apiService.catalogMatchedProfiles(this.apiService.userID, catalog, this.minExperience,  this.maxExperience, 
-      selQualifications, selReqSkills, selOptSkills)
-      .subscribe((response)=>{
-        if(response["status"] === "success"){
-          if(!response["files"].length){
-            this.toastr.info("No matching profiles found.", 'Results', {
+    if(this.submitting===false){
+      this.submitting = true;
+      this.apiService.catalogMatchedProfiles(this.apiService.userID, catalog, this.minExperience,  this.maxExperience, 
+        selQualifications, selReqSkills, selOptSkills)
+        .subscribe((response)=>{
+          if(response["status"] === "success"){
+            if(!response["files"].length){
+              this.toastr.info("No matching profiles found.", 'Results', {
+                timeOut: 3000,
+                progressBar: true,
+                closeButton: true
+              });  
+            }
+            this.matchedProfiles = response["files"];
+          }else if(response["status"] === "error"){
+            this.toastr.error("Unable to get catalog matched files", '', {
               timeOut: 3000,
               progressBar: true,
               closeButton: true
-            });  
+            });
           }
-          this.matchedProfiles = response["files"];
-        }else if(response["status"] === "error"){
-          this.toastr.error("Unable to get catalog matched files", '', {
-            timeOut: 3000,
-            progressBar: true,
-            closeButton: true
-          });
-        }
-      });
-      this.dtTrigger.next();
+          this.submitting = false;
+        });
+        this.dtTrigger.next();
+    }
   }
 }

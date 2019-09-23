@@ -1,8 +1,14 @@
 <div class="container">
     <div class="row pb-1 mt-4 mb-1">       
     </div>
-    <div class="row pb-1 mt-4 mb-1 border-bottom" *ngIf="catalogDetails.length">
+    <div class="row pb-1 mt-4 mb-1 border-bottom">
         <h5>Catalog Details</h5>
+    </div>
+    <div class="row" *ngIf="!catalogDetails.length">
+        <div class="col-sm-12">
+            <br/>
+            <h6>No Catalogs Found.</h6>
+        </div>
     </div>
     <div class="row" *ngIf="catalogDetails.length">
         <div class="col-sm-12">

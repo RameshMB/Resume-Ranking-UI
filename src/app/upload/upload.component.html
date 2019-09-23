@@ -19,7 +19,9 @@
                 <br/>
                 <div class="form-group">
                     <button class="btn btn-success" type="submit" (click)="onSubmit()" 
-                        [disabled]="!selectedCatalog || !uploadedFiles">Upload</button>   
+                        [disabled]="!selectedCatalog || !uploadedFiles">Upload
+                        <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                    </button>   
                 </div>
             </div>
         </div>

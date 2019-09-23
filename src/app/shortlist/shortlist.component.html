@@ -58,9 +58,11 @@
         </div>
         <div class="col-sm-2" style="padding-top: 30px;">
             <div class="form-group">
-                <button name="submit" class="btn btn-primary" 
+                <button name="submit" class="btn btn-success" 
                 [disabled]="!selectedReqSkills.length"
-                 (click)="getMatchedProfiles()">Go</button>
+                 (click)="getMatchedProfiles()">Submit 
+                 <i class="fa fa-spinner fa-spin" *ngIf="submitting"></i>
+                </button>
             </div>
         </div>
     </div>

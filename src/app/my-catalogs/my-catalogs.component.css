@@ -7,3 +7,10 @@
 .border-bottom {
     border-bottom: 1px solid #FFDB00!important;
 }
+
+table.table td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 24px;
+}   

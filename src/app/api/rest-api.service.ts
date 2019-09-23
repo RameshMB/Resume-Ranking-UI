@@ -88,6 +88,20 @@ export class RestApiService {
       catchError(this.handleError)
     )  
   }
+
+  deleteCatalog(userId: string, catalog: string) {
+    return this.http.post<any[]>(this.apiURL + '/delete-catalog', JSON.stringify({"user_id": userId, "catalog": catalog}), this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    )  
+  }
+
+  deleteCatalogFile(userId: string, catalog: string, fileId: string) {
+    return this.http.post<any[]>(this.apiURL + '/delete-catalog-file', JSON.stringify({"user_id": userId, "catalog": catalog, "file_id": fileId}), this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    )  
+  }
    
   // Error handling 
   handleError(error) {

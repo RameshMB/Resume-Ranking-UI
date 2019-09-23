@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
 import { DataTablesModule } from 'angular-datatables';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -21,6 +22,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LoginComponent } from './login/login.component';
 import { APP_BASE_HREF } from '@angular/common';
 import { MyCatalogsComponent } from './my-catalogs/my-catalogs.component';  
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogService } from './confirmation-dialog/confirmation-dialog.service';
 
 
 @NgModule({
@@ -33,7 +36,8 @@ import { MyCatalogsComponent } from './my-catalogs/my-catalogs.component';
     ShortlistComponent,
     PageNotFoundComponent,
     LoginComponent,
-    MyCatalogsComponent
+    MyCatalogsComponent, 
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,8 @@ import { MyCatalogsComponent } from './my-catalogs/my-catalogs.component';
     ToastrModule.forRoot(), // ToastrModule added
     DataTablesModule
   ],
-  providers: [{provide: APP_BASE_HREF, useValue : '/' }],
-  bootstrap: [AppComponent]
+  providers: [{provide: APP_BASE_HREF, useValue : '/' }, ConfirmationDialogService],
+  bootstrap: [AppComponent],
+  entryComponents: [ConfirmationDialogComponent]
 })
 export class AppModule { }
