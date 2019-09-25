@@ -75,7 +75,7 @@ export class ShortlistComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       responsive: true,
-      scrollY: '300',
+      scrollY: '500',
       scrollX: true
     };
   }

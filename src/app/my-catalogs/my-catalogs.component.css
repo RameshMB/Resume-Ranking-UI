@@ -14,3 +14,5 @@ table.table td a {
     margin: 0 5px;
     min-width: 24px;
 }   
+
+.tooltip-color + .tooltip > .tooltip-inner {background-color: #f00;}

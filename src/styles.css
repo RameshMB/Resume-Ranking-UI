@@ -2,6 +2,19 @@
 /* @import '~bootstrap/dist/css/bootstrap.min.css'; */
 @import '~ngx-toastr/toastr.css';
 @import '~angular2-multiselect-dropdown/themes/default.theme.css';
+
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
+    position: relative;
 }
+
+/* #contents {
+    overflow-y: scroll;
+} */
+
+/* html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+} */

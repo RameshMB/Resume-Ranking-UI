@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -49,7 +50,8 @@ import { ConfirmationDialogService } from './confirmation-dialog/confirmation-di
     NgbModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
-    DataTablesModule
+    DataTablesModule,
+    NgxSpinnerModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue : '/' }, ConfirmationDialogService],
   bootstrap: [AppComponent],

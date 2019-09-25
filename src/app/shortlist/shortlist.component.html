@@ -1,13 +1,15 @@
 <div class="col-md-12">
-    <div class="col-4">
-        <div class="form-group required">
-            <label class="font-weight-bold">Choose Catalog:</label>
-            <angular2-multiselect [data]="userCatalogs" [(ngModel)]="selectedCatalog" 
-                [settings]="catalogSettings" 
-                (onSelect)="onCatalogSelect($event)" 
-                (onDeSelect)="onCatalogDeSelect($event)"
-                (onDeSelectAll)="onCatalogDeSelectAll($event)">
-            </angular2-multiselect>
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group required">
+                <label class="font-weight-bold">Choose Catalog:</label>
+                <angular2-multiselect [data]="userCatalogs" [(ngModel)]="selectedCatalog" 
+                    [settings]="catalogSettings" 
+                    (onSelect)="onCatalogSelect($event)" 
+                    (onDeSelect)="onCatalogDeSelect($event)"
+                    (onDeSelectAll)="onCatalogDeSelectAll($event)">
+                </angular2-multiselect>
+            </div>
         </div>
     </div>
     <div class="row pb-1 mt-4 mb-1 border-bottom" *ngIf="selectedCatalog.length">
@@ -95,8 +97,7 @@
                     <td>{{file.Skills}}</td>
                     <td>{{file.created_date}}</td>
                     <td>
-                        <!-- <button class="download_btn" (click)="download_resume(file.catalog, file._id)"><i class="fa fa-download" aria-hidden="true"></i></button> -->
-                        <a download href={{file.download_url}}><i class="fa fa-download" aria-hidden="true"></i></a>
+                        <a class="download" href={{file.download_url}} title="Download" data-toggle="tooltip" style="color: #337ab7;"><i class="material-icons file_download">&#xe2c4;</i></a>
                     </td>
                 </tr>
             </tbody>

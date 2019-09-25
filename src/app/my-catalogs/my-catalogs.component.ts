@@ -40,8 +40,8 @@ export class MyCatalogsComponent implements OnInit {
       pagingType: 'full_numbers',
       pageLength: 10,
       responsive: true,
-      scrollY: '250',
-      scrollX: true,
+      scrollY: '500',
+      scrollX: true
     };
     this.getUserCatalogNames();    
   }
@@ -122,7 +122,6 @@ export class MyCatalogsComponent implements OnInit {
       this.confirmationDialogService.confirm('Confirmation', 'Do you really want to delete this catalog?')
       .then((confirmed) =>{ 
         if(confirmed==true){
-          console.log('User confirmed:', confirmed);
           this.apiService.deleteCatalog(this.apiService.userID, this.selectedCatalog[0]["itemName"])
           .subscribe((response)=>{
             if(response["status"] === "success"){
@@ -152,7 +151,6 @@ export class MyCatalogsComponent implements OnInit {
   }
 
   deleteFile(file_id, index){
-    console.log(file_id, index);
     this.confirmationDialogService.confirm('Confirmation', 'Do you really want to delete this record?')
       .then((confirmed) =>{ 
         if(confirmed==true){
@@ -165,7 +163,6 @@ export class MyCatalogsComponent implements OnInit {
                 closeButton: true
               });
               this.catalogFiles.splice(index, 1);
-              console.log(this.catalogFiles, 'dddddddddddd')
             }else if(response["status"] === "error"){
               this.toastr.error("Unable to delete catalog.", '', {
                 timeOut: 3000,

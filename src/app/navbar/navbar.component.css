@@ -17,7 +17,7 @@
 .navbar-nav > a {
     float: left;
     position: relative;
-  }
+}
   .active-link {
     border-bottom: 5px solid #FFDB00;
     bottom: -10px;
@@ -26,4 +26,8 @@
     position: absolute;
     right: 0;
     width: auto;
-  }
+}
+
+.ml-auto, .mx-auto {
+    margin-left: 1120px !important;
+}

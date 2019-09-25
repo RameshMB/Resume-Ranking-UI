@@ -1,18 +1,18 @@
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">
+    <!-- <a class="navbar-brand" href="/"> -->
       <img src="assets/images/EY.png" width="90" class="d-inline-block align-top">
-    </a>
+    <!-- </a> -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="navbar-collapse collapse">
+    <div class=" collapse navbar-collapse" id="navbarToggleExternalContent">
       <div class="navbar-nav ml-auto">
           <a class="nav-link linkmargin" [routerLink]="['dashboard']" href="/" [routerLinkActive]="['active-link']">Home</a>
           <a class="nav-link linkmargin" [routerLink]="['upload']" href="/upload" [routerLinkActive]="['active-link']">Upload</a>
           <a class="nav-link linkmargin" [routerLink]="['my-catalogs']" href="/my-catalogs" [routerLinkActive]="['active-link']">MyCatalogs</a>
-          <a class="nav-link linkmargin" [routerLink]="['shortlist']" href="/shortlist" [routerLinkActive]="['active-link']">ShortList</a>
+          <a class="nav-link linkmargin" [routerLink]="['shortlist']" href="/shortlist" [routerLinkActive]="['active-link']">Shortlist</a>
       </div>
       <!-- <button (click)="onLogout()" class="btn btn-outline-danger margin">Logout</button> -->
     </div>
