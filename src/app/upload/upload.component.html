@@ -1,8 +1,17 @@
 <div class="row" style="margin-top: 70px;">
     <div class="col-6 mx-auto">
         <div class="form-group required">
-            <label for="catalog" class="font-weight-bold">Enter Catalog Name:</label>                    
-            <input id="catalog" type="text" class="form-control" [(ngModel)]="selectedCatalog" [ngbTypeahead]="search"/>
+            <label for="catalog" class="font-weight-bold">Enter Catalog Name:</label>    
+            <ng-template #rt let-r="result" let-t="term">{{ r.name}}</ng-template>            
+            <input id="catalog" type="text" class="form-control"
+                type="text" 
+                #instance="ngbTypeahead"
+                [(ngModel)]="selectedCatalog" 
+                [ngbTypeahead]="search" 
+                [resultTemplate]="rt"
+                [inputFormatter]="formatter"
+                (focus)="focus$.next($event.target.value)"
+                (click)="click$.next($event.target.value)">
         </div>
         <div class="form-group required">
             <label for="catalog" class="font-weight-bold">Choose Resume Files:</label>

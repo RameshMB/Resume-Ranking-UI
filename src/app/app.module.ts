@@ -5,6 +5,7 @@ import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { TagInputModule } from 'ngx-chips';
 
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -25,6 +26,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { MyCatalogsComponent } from './my-catalogs/my-catalogs.component';  
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationDialogService } from './confirmation-dialog/confirmation-dialog.service';
+import { EditRecordComponent } from './edit-record/edit-record.component';
 
 
 @NgModule({
@@ -38,7 +40,7 @@ import { ConfirmationDialogService } from './confirmation-dialog/confirmation-di
     PageNotFoundComponent,
     LoginComponent,
     MyCatalogsComponent, 
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent, EditRecordComponent
   ],
   imports: [
     BrowserModule,
@@ -51,10 +53,11 @@ import { ConfirmationDialogService } from './confirmation-dialog/confirmation-di
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
     DataTablesModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    TagInputModule
   ],
   providers: [{provide: APP_BASE_HREF, useValue : '/' }, ConfirmationDialogService],
   bootstrap: [AppComponent],
-  entryComponents: [ConfirmationDialogComponent]
+  entryComponents: [ConfirmationDialogComponent, EditRecordComponent]
 })
 export class AppModule { }

@@ -11,9 +11,7 @@ export class RestApiService {
   
   // Define API
   apiURL = 'http://localhost:5000';
-  userID = "5d73a631dc1280680445b763"; //ramesh
-  // userID = "5d84908958c58f0f23f71220"; //DK
-  logged_in = null;
+  userID: string = '';
   
 
   constructor(private http: HttpClient) { }
@@ -26,8 +24,8 @@ export class RestApiService {
   }  
 
   // HttpClient API get() method => Fetch employees list
-  getUserCatalogs(userId: string) {
-    return this.http.post<any[]>(this.apiURL + '/user-catalogs', JSON.stringify({"user_id": userId}), this.httpOptions)
+  getUserCatalogs() {
+    return this.http.post<any[]>(this.apiURL + '/user-catalogs', JSON.stringify({"user_id": this.userID}), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     )  
@@ -40,64 +38,84 @@ export class RestApiService {
     )  
   }
 
-  catalogQualifications(userId: string, catalogName: string) {
+  catalogQualifications(catalogId: string) {
     return this.http.post<any[]>(this.apiURL + '/get-catalog-qualification', 
-      JSON.stringify({"user_id": userId, "catalog": catalogName}), this.httpOptions)
+      JSON.stringify({"user_id": this.userID, "catalog_id": catalogId}), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     )  
   }
 
-  catalogSkills(userId: string, catalogName: string) {
+  catalogSkills(catalogId: string) {
     return this.http.post<any[]>(this.apiURL + '/get-catalog-skills', 
-      JSON.stringify({"user_id": userId, "catalog": catalogName}), this.httpOptions)
+      JSON.stringify({"user_id": this.userID, "catalog_id": catalogId}), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     )  
   }
   
-  catalogFiles(userId: string, catalogName: string) {
+  catalogFiles(catalogId: string) {
     return this.http.post<any[]>(this.apiURL + '/get-catalog-files', 
-      JSON.stringify({"user_id": userId, "catalog": catalogName}), this.httpOptions)
+      JSON.stringify({"user_id": this.userID, "catalog_id": catalogId}), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     )  
   }
 
-  catalogMatchedProfiles(userId: string, catalogName: string, minExp: number, maxExp: number, qualifications: any[], 
+  catalogMatchedProfiles(catalogId: string, minExp: number, maxExp: number, qualifications: any[], 
     req_skills: any[], opt_skills: any[]) {
     return this.http.post<any[]>(this.apiURL + '/short-list-profiles', 
-      JSON.stringify({"user_id": userId, "catalog": catalogName, "min_exp": minExp, "max_exp": maxExp, 
+      JSON.stringify({"user_id": this.userID, "catalog_id": catalogId, "min_exp": minExp, "max_exp": maxExp, 
       "req_skills": req_skills, "opt_skills": opt_skills, "qualifications": qualifications}), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     )  
   }
 
-  extractFileData(userId: string, catalogName: string) {
+  extractFileData(catalogId: string) {
     return this.http.post<any[]>(this.apiURL + '/extract-catalog-resumes-data', 
-      JSON.stringify({"user_id": userId, "catalog": catalogName}), this.httpOptions)
+      JSON.stringify({"user_id": this.userID, "catalog_id": catalogId}), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     )  
   }
 
-  getUserCatalogDetails(userId: string) {
-    return this.http.post<any[]>(this.apiURL + '/get-catalog-details', JSON.stringify({"user_id": userId}), this.httpOptions)
+  getUserCatalogDetails() {
+    return this.http.post<any[]>(this.apiURL + '/get-catalog-details', JSON.stringify({"user_id": this.userID}), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     )  
   }
 
-  deleteCatalog(userId: string, catalog: string) {
-    return this.http.post<any[]>(this.apiURL + '/delete-catalog', JSON.stringify({"user_id": userId, "catalog": catalog}), this.httpOptions)
+  deleteCatalog(catalogId: string) {
+    return this.http.post<any[]>(this.apiURL + '/delete-catalog', JSON.stringify({"user_id": this.userID, "catalog_id": catalogId}), this.httpOptions)
     .pipe(
       catchError(this.handleError)
     )  
   }
 
-  deleteCatalogFile(userId: string, catalog: string, fileId: string) {
-    return this.http.post<any[]>(this.apiURL + '/delete-catalog-file', JSON.stringify({"user_id": userId, "catalog": catalog, "file_id": fileId}), this.httpOptions)
+  deleteCatalogFile(catalogId: string, fileId: string) {
+    return this.http.post<any[]>(this.apiURL + '/delete-catalog-file', JSON.stringify({"user_id": this.userID, 
+    "catalog_id": catalogId, "file_id": fileId}), this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    )  
+  }
+
+  updateCatalogFileData(fileId: string, name: string, email: any[], mobile: any[], skills: any[], 
+    qualifications: any[], is_active: boolean) {
+    return this.http.post<any[]>(this.apiURL + '/update-file-data', JSON.stringify({"user_id": this.userID, 
+      "file_id": fileId, "name": name, "email": email, "mobile": mobile, "skills": skills, "qualifications": qualifications, 
+      "is_active": is_active}), 
+      this.httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    )  
+  }
+
+  login(userName: string, password: string) {
+    return this.http.post<any[]>(this.apiURL + '/login', JSON.stringify({"username": userName, "password": password}), 
+      this.httpOptions)
     .pipe(
       catchError(this.handleError)
     )  

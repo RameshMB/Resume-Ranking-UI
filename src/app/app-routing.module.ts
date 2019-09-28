@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'my-catalogs', component: MyCatalogsComponent },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  // { path: '**', component: PageNotFoundComponent }
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

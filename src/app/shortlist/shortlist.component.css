@@ -20,3 +20,7 @@
   .download_btn:hover {
     background-color: RoyalBlue;
   }
+
+  .material-icons {
+    font-size: 20px;
+}

@@ -1,4 +1,12 @@
-<div class="col-md-12">
+<div class="container" *ngIf="!userCatalogs.length">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="alert alert-primary" role="alert">
+            You have not created catalogs.
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" *ngIf="userCatalogs.length">
     <div class="row">
         <div class="col-4">
             <div class="form-group required">
@@ -97,7 +105,12 @@
                     <td>{{file.Skills}}</td>
                     <td>{{file.created_date}}</td>
                     <td>
-                        <a class="download" href={{file.download_url}} title="Download" data-toggle="tooltip" style="color: #337ab7;"><i class="material-icons file_download">&#xe2c4;</i></a>
+                        <div class="row">
+                            <a class="download" href={{file.download_url}} title="Download file" 
+                            data-toggle="tooltip" style="color: #337ab7;margin-left: 40px">
+                                <i class="material-icons file_download">&#xe2c4;</i>
+                            </a>
+                        </div>
                     </td>
                 </tr>
             </tbody>

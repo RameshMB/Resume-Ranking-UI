@@ -67,24 +67,30 @@ export class ShortlistComponent implements OnInit {
     badgeShowLimit:5
   };
   
-  constructor(private apiService: RestApiService, private toastr: ToastrService, public router: Router) {  }
+  constructor(private apiService: RestApiService, private toastr: ToastrService, private router: Router) {  }
 
   ngOnInit() {
-    this.getUserCatalogNames();
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      responsive: true,
-      scrollY: '500',
-      scrollX: true
-    };
+    if(!this.apiService.userID){
+      this.router.navigate(['login']);
+    }else{
+      this.getUserCatalogNames();
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        responsive: true,
+        scrollY: '500',
+        scrollX: true
+      };
+    }
   }
 
   public getUserCatalogNames(){
-    this.apiService.getUserCatalogs(this.apiService.userID).subscribe((response)=>{
+    this.apiService.getUserCatalogs().subscribe((response)=>{
       if(response["status"] == "success"){
         for(let cat_index in response["data"]){
-          this.userCatalogs.push({"id": cat_index + 2, "itemName": response["data"][cat_index]});
+          response["data"][cat_index]["id"] = cat_index + 2;
+          response["data"][cat_index]["itemName"] = response["data"][cat_index]["name"];
+          this.userCatalogs.push(response["data"][cat_index]);
         }
       }else if(response["status"] == "error"){
         this.toastr.error("Unable to get catalog names", '', {
@@ -121,7 +127,7 @@ export class ShortlistComponent implements OnInit {
     this.selectedReqSkills = [];
     this.selectedOptionalSkills = [];
     if(this.selectedCatalog.length){
-      this.apiService.catalogQualifications(this.apiService.userID, this.selectedCatalog[0]["itemName"])
+      this.apiService.catalogQualifications(this.selectedCatalog[0]["_id"])
         .subscribe((response)=>{
           if(response["status"] == "success"){
             for(let q_index in response["qualifications"]){
@@ -146,7 +152,7 @@ export class ShortlistComponent implements OnInit {
     this.selectedReqSkills = [];
     this.selectedOptionalSkills = [];
     if(this.selectedCatalog.length){
-      this.apiService.catalogSkills(this.apiService.userID, this.selectedCatalog[0]["itemName"])
+      this.apiService.catalogSkills(this.selectedCatalog[0]["_id"])
         .subscribe((response)=>{
           if(response["status"] == "success"){
             for(let sk_index in response["skills"]){
@@ -169,7 +175,7 @@ export class ShortlistComponent implements OnInit {
     var selQualifications = [];
     var selReqSkills = [];
     var selOptSkills = [];
-    var catalog = this.selectedCatalog[0]["itemName"];
+    var catalog = this.selectedCatalog[0]["_id"];
     if(this.minExperience == 0 || this.minExperience == null){
       this.minExperience = null;
     }
@@ -187,7 +193,7 @@ export class ShortlistComponent implements OnInit {
     }
     if(this.submitting===false){
       this.submitting = true;
-      this.apiService.catalogMatchedProfiles(this.apiService.userID, catalog, this.minExperience,  this.maxExperience, 
+      this.apiService.catalogMatchedProfiles(catalog, this.minExperience,  this.maxExperience, 
         selQualifications, selReqSkills, selOptSkills)
         .subscribe((response)=>{
           if(response["status"] === "success"){

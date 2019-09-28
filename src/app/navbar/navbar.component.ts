@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { RestApiService } from '../api/rest-api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -8,16 +9,12 @@ import { Observable } from 'rxjs';
 })
 export class NavbarComponent implements OnInit {
 
-  isLoggedIn: Observable<boolean>;
+  constructor(private apiService: RestApiService, private router: Router) { }
 
-  constructor() { }
-
-  ngOnInit() {
-    
-  }
-
+  ngOnInit() { }
+  
   onLogout() {
-    
+    this.apiService.userID = '';
+    this.router.navigate(['login']);
   }
-
 }

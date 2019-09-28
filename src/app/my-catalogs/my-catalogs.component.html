@@ -1,4 +1,12 @@
-<div class="col-md-12">
+<div class="container" *ngIf="!userCatalogs.length">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="alert alert-primary" role="alert">
+            You have not created catalogs.
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" *ngIf="userCatalogs.length">
     <div class="row">
         <div class="col-4">
             <div class="form-group required">
@@ -37,10 +45,11 @@
                 <thead>
                     <tr>
                         <th>SL No.</th>
+                        <!-- <th>Actions</th> -->
                         <th>Name</th>
                         <th>Mobile No</th>
-                        <th>Email Address</th>
-                        <th>Experience(Yrs)</th>
+                        <th>Email</th>
+                        <th>Exp.(Yrs)</th>
                         <th>Skills</th>
                         <th>Qualifications</th>
                         <th>Upload Date</th>
@@ -50,17 +59,24 @@
                 <tbody>
                     <tr *ngFor="let file of catalogFiles; let i = index">
                         <td>{{ i + 1 }}</td>
+                        <!-- <td>                            
+                            <a class="edit" title="Edit" data-toggle="tooltip" style="color: #FFC107;"  (click)="editFile(file)"><i class="material-icons mode_edit">&#xE254;</i></a>
+                            <a class="delete" title="Delete" data-toggle="tooltip" style="color: #E34724;" (click)="deleteFile(file._id, i)"><i class="material-icons delete_forever">&#xe92b;</i></a>
+                            <a class="download" href={{file.download_url}} title="Download" data-toggle="tooltip" style="color: #337ab7;"><i class="material-icons file_download">&#xe2c4;</i></a>
+                        </td> -->
                         <td>{{file.Name}}</td>
                         <td>{{file.Mobile_No}}</td>
                         <td>{{file.Email_Address}}</td>
                         <td>{{file.Years_of_Experience}}</td>
                         <td>{{file.Skills}}</td>
                         <td>{{file.Degree}}</td>
-                        <td>{{file.created_date}}</td>
-                        <td>                            
-                            <a class="download" href={{file.download_url}} title="Download" data-toggle="tooltip" style="color: #337ab7;"><i class="material-icons file_download">&#xe2c4;</i></a>
-                            <a class="edit" title="Edit" data-toggle="tooltip" style="color: #FFC107;"  (click)="editFile(file._id, i)"><i class="material-icons mode_edit">&#xE254;</i></a>
-                            <a class="delete" title="Delete" data-toggle="tooltip" style="color: #E34724;" (click)="deleteFile(file._id, i)"><i class="material-icons delete_forever">&#xe92b;</i></a>
+                        <td>{{file.created_date}}</td>                        
+                        <td>
+                            <div class="row">
+                                <a class="edit" title="Edit" data-toggle="tooltip" style="color: #FFC107;"  (click)="editFile(file)"><i class="material-icons mode_edit">&#xE254;</i></a>
+                                <a class="delete" title="Delete" data-toggle="tooltip" style="color: #E34724;" (click)="deleteFile(file._id, i)"><i class="material-icons delete_forever">&#xe92b;</i></a>
+                                <a class="download" href={{file.download_url}} title="Download" data-toggle="tooltip" style="color: #337ab7;"><i class="material-icons file_download">&#xe2c4;</i></a>
+                            </div>               
                         </td>
                     </tr>
                 </tbody>

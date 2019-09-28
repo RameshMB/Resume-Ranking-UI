@@ -3,7 +3,8 @@ import { RestApiService } from '../api/rest-api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { ConfirmationDialogService } from '../confirmation-dialog/confirmation-dialog.service';
-
+import { EditRecordService } from '../edit-record/edit-record.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class MyCatalogsComponent implements OnInit {
   public extracting: boolean = false;
   public deleting: boolean = false;
   
-  catalogFiles: any[];
+  catalogFiles: any[] = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
@@ -30,27 +31,35 @@ export class MyCatalogsComponent implements OnInit {
     searchPlaceholderText: "Search Catalog"
   };
 
-  constructor(private apiService: RestApiService, private toastr: ToastrService, private confirmationDialogService: ConfirmationDialogService) { }
+  constructor(private apiService: RestApiService, private toastr: ToastrService, 
+    private confirmationDialogService: ConfirmationDialogService, private editRecord: EditRecordService,
+    private router: Router) { }
 
   ngOnInit() {
-    this.userCatalogs = [];
-    this.selectedCatalog = [];
-    this.catalogFiles = [];
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-      responsive: true,
-      scrollY: '500',
-      scrollX: true
-    };
-    this.getUserCatalogNames();    
+    if(!this.apiService.userID){
+      this.router.navigate(['login']);
+    }else{
+      this.userCatalogs = [];
+      this.selectedCatalog = [];
+      this.catalogFiles = [];
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        responsive: true,
+        scrollY: '500',
+        scrollX: true
+      };
+      this.getUserCatalogNames();    
+    }
   }
 
   public getUserCatalogNames(){
-    this.apiService.getUserCatalogs(this.apiService.userID).subscribe((response)=>{
+    this.apiService.getUserCatalogs().subscribe((response)=>{
       if(response["status"] == "success"){
         for(let cat_index in response["data"]){
-          this.userCatalogs.push({"id": cat_index + 2, "itemName": response["data"][cat_index]});
+          response["data"][cat_index]["id"] = cat_index + 2;
+          response["data"][cat_index]["itemName"] = response["data"][cat_index]["name"];
+          this.userCatalogs.push(response["data"][cat_index]);
         }
       }else if(response["status"] == "error"){
         this.toastr.error("Unable to get catalog names", '', {
@@ -65,7 +74,7 @@ export class MyCatalogsComponent implements OnInit {
   public getCatalogFiles(){
     this.catalogFiles = [];
     if(this.selectedCatalog.length){
-      this.apiService.catalogFiles(this.apiService.userID, this.selectedCatalog[0]["itemName"])
+      this.apiService.catalogFiles(this.selectedCatalog[0]["_id"])
         .subscribe((response)=>{
           if(response["status"] === "success"){
             this.catalogFiles = response["files"];
@@ -81,12 +90,10 @@ export class MyCatalogsComponent implements OnInit {
     }
   }
 
-  onCatalogSelect(item: any) {
-    console.log(item);
+  onCatalogSelect() {
     this.getCatalogFiles();
   }
-  onCatalogDeSelect(items: any) {
-    console.log(items);
+  onCatalogDeSelect() {
     this.getCatalogFiles();
   }
 
@@ -94,7 +101,7 @@ export class MyCatalogsComponent implements OnInit {
     if(this.extracting === false){
       this.extracting = true;
       if(this.selectedCatalog.length){
-        this.apiService.extractFileData(this.apiService.userID, this.selectedCatalog[0]["itemName"])
+        this.apiService.extractFileData(this.selectedCatalog[0]["_id"])
           .subscribe((response)=>{
             if(response["status"] === "success"){
               this.toastr.success(response["message"], '', {
@@ -122,7 +129,7 @@ export class MyCatalogsComponent implements OnInit {
       this.confirmationDialogService.confirm('Confirmation', 'Do you really want to delete this catalog?')
       .then((confirmed) =>{ 
         if(confirmed==true){
-          this.apiService.deleteCatalog(this.apiService.userID, this.selectedCatalog[0]["itemName"])
+          this.apiService.deleteCatalog(this.selectedCatalog[0]["_id"])
           .subscribe((response)=>{
             if(response["status"] === "success"){
               this.toastr.success(response["message"], '', {
@@ -150,11 +157,11 @@ export class MyCatalogsComponent implements OnInit {
     }
   }
 
-  deleteFile(file_id, index){
+  deleteFile(file_id: string, index: number){
     this.confirmationDialogService.confirm('Confirmation', 'Do you really want to delete this record?')
       .then((confirmed) =>{ 
         if(confirmed==true){
-          this.apiService.deleteCatalogFile(this.apiService.userID, this.selectedCatalog[0]["itemName"], file_id)
+          this.apiService.deleteCatalogFile(this.selectedCatalog[0]["_id"], file_id)
           .subscribe((response)=>{
             if(response["status"] === "success"){
               this.toastr.success(response["message"], '', {
@@ -178,7 +185,15 @@ export class MyCatalogsComponent implements OnInit {
       );
   }
   
-  editFile(file_id, index){
-    console.log(file_id, index);
+  editFile(file_data: {}){
+    this.editRecord.editRecord(file_data)
+      .then((confirmed) =>{ 
+        if(confirmed === true){
+          this.getCatalogFiles();
+        }
+      })
+      .catch(() => 
+        console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)')
+      );
   }
 }

@@ -1,8 +1,8 @@
 import { RestApiService } from '../api/rest-api.service';
 import {Component, ViewChild, OnInit} from '@angular/core';
 import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
-import {Observable, Subject, merge} from 'rxjs';
-import {debounceTime, distinctUntilChanged, filter, map} from 'rxjs/operators';
+import {Observable, Subject} from 'rxjs';
+import {debounceTime, distinctUntilChanged, filter, map, merge} from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import {Router} from '@angular/router';
 
@@ -16,30 +16,35 @@ export class UploadComponent implements OnInit {
   public uploadedFiles: File[];
   public loading: boolean = false;
   
-  constructor(private apiService: RestApiService, private toastr: ToastrService, public router: Router) {  }
+  constructor(private apiService: RestApiService, private toastr: ToastrService, private router: Router) {  }
 
   ngOnInit() {
-    this.getUserCatalogNames();    
+    if(!this.apiService.userID){
+      this.router.navigate(['login']);
+    }else{
+      this.getUserCatalogNames();
+    }
   }
 
   public selectedCatalog: any;
+
   @ViewChild('instance', {static: true}) instance: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
-
-  search = (text$: Observable<string>) => {
-    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
-    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
-    const inputFocus$ = this.focus$;
-
-    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      distinctUntilChanged(),
+      merge(this.focus$),
+      merge(this.click$.pipe(filter(() => !this.instance.isPopupOpen()))),
       map(term => (term === '' ? this.user_catalogs
-        : this.user_catalogs.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
+        : this.user_catalogs.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
     );
-  }
+
+   formatter = (x: {searchitem: string}) => x["name"];
 
   public getUserCatalogNames(){
-    this.apiService.getUserCatalogs(this.apiService.userID).subscribe((response)=>{
+    this.apiService.getUserCatalogs().subscribe((response)=>{
       if(response["status"] == "success"){
         this.user_catalogs = response["data"];  
       }else if(response["status"] == "error"){
@@ -53,7 +58,7 @@ export class UploadComponent implements OnInit {
      });
   }
 
-  public onSelectFile(event) {
+  public onSelectFile(event: any) {
     var valid_file_type = true;
     for(let sel_file of event.target.files){
         var file_type = sel_file["name"].split(".").pop();      // Split the string using dot as separator
@@ -78,7 +83,13 @@ export class UploadComponent implements OnInit {
       const formData = new FormData();
       Array.from(this.uploadedFiles).forEach(f => formData.append('file', f));
       formData.append('user_id', this.apiService.userID);
-      formData.append('catalog_name', this.selectedCatalog);
+      if(typeof(this.selectedCatalog) === 'string'){
+        formData.append('catalog_id', null);
+        formData.append('catalog_name', this.selectedCatalog);  
+      }else{
+        formData.append('catalog_id', this.selectedCatalog._id);
+        formData.append('catalog_name', this.selectedCatalog.name);  
+      }
       this.apiService.uploadCatalogFiles(formData).subscribe((response)=>{
         if(response["status"] == "success"){
           this.toastr.success(response["message"], '', {
@@ -87,7 +98,8 @@ export class UploadComponent implements OnInit {
             closeButton: true
           });
           this.selectedCatalog = [];
-          this.uploadedFiles = null;        
+          this.uploadedFiles = null;
+          this.getUserCatalogNames();       
         }else if(response["status"] == "error"){
           this.toastr.error(response["message"], '', {
             timeOut: 3000,

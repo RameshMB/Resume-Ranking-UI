@@ -15,4 +15,10 @@ table.table td a {
     min-width: 24px;
 }   
 
-.tooltip-color + .tooltip > .tooltip-inner {background-color: #f00;}
+.tooltip-color + .tooltip > .tooltip-inner {
+    background-color: #f00;
+}
+
+.material-icons {
+    font-size: 20px;
+}
