@@ -27,7 +27,7 @@
     "bootstrap": "^4.3.1",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "ng-multiselect-dropdown-angular7": "^0.1.5",
     "ngx-chips": "^2.0.2",
     "ngx-spinner": "^8.0.3",
